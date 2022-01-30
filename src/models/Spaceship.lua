@@ -13,8 +13,6 @@ function Spaceship:init()
     self.width = SPACESHIP_WIDTH
     self.height = SPACESHIP_HEIGHT
     self.dx = 0
-
-    self.lasers = {}
 end
 
 function Spaceship:update(dt)
@@ -23,19 +21,8 @@ function Spaceship:update(dt)
             or 0
 
     self.x = self.x + self.dx * dt
-
-    if love.keyboard.wasPressed("space") then
-        table.insert(self.lasers, Laser(self.x + self.width/2, self.y))
-    end
-
-    for k, laser in pairs(self.lasers) do
-        laser:update(dt)
-    end
 end
 
 function Spaceship:render()
     draw(self.image, self.x, self.y, self.width, self.height)
-    for k, laser in pairs(self.lasers) do
-        laser:render()
-    end
 end
