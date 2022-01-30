@@ -2,6 +2,7 @@ Class = require 'libs/class'
 
 require 'src/models/Spaceship'
 require 'src/models/Laser'
+require 'src/models/NotesControl'
 require 'src/utils/imageUtils'
 require 'src/StateMachine'
 require 'src/states/BaseState'
@@ -13,7 +14,7 @@ WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
 
 
-local background = love.graphics.newImage('assets/images/background.png')
+-- local background = love.graphics.newImage('assets/images/background.png')
 
 function love.load()
     love.window.setMode(WINDOW_WIDTH, WINDOW_HEIGHT, {
@@ -27,14 +28,16 @@ function love.load()
       ["big"] = love.graphics.newFont(28)
     }
 
-    gStateMachine = StateMachine {
-        ['title'] = function() return TitleState() end,
-        ['play'] = function() return PlayState() end,
-        ['score'] = function() return ScoreState() end
-    }
-    gStateMachine:change('title')
+    -- gStateMachine = StateMachine {
+    --     ['title'] = function() return TitleState() end,
+    --     ['play'] = function() return PlayState() end,
+    --     ['score'] = function() return ScoreState() end
+    -- }
+    -- gStateMachine:change('title')
 
     love.keyboard.keysPressed = {}
+    notes_control = NotesControl( 20, WINDOW_HEIGHT, WINDOW_WIDTH)
+
 end
 
 function love.keypressed(key)
@@ -51,14 +54,15 @@ function love.keyboard.wasPressed(key)
 end
 
 function love.update(dt)
-    gStateMachine:update(dt)
-
+    -- gStateMachine:update(dt)
+    notes_control:update(dt)
     love.keyboard.keysPressed = {}
 end
 
 
 function love.draw()    
-    love.graphics.draw(background, 0, 0)
+    -- love.graphics.draw(background, 0, 0)
+    notes_control:render()
+    -- gStateMachine:render()
 
-    gStateMachine:render()
 end

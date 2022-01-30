@@ -1,16 +1,18 @@
 Note = Class{}
 
-function Note:init(y, width, height )
+function Note:init(y, width, length)
     self.y = y
-    self.dy = 50
+    self.dy = 200
     self.width = width
-    self.height = height 
+    self.length = length 
 end
 
 function Note:render()
-    love.graphics.rectangle('fill', 0, self.y, self.width, self.height)
+    love.graphics.rectangle('fill', 0, self.y, self.width, self.length)
 end
 
-function Note:update_position(dt)
-    self.y = self.y + self.dy * dt
+function Note:update_position(dt, window_height)
+    if self.y <= window_height then
+        self.y = self.y + self.dy * dt
+    end
 end
